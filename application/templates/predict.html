@@ -1,0 +1,345 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Predict Data Page</title>
+    <link rel="stylesheet" href="Style.css" />
+    <script src="https://kiy.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
+
+    <!--stylesheet-->
+    <style>
+      * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body,
+input,
+textarea {
+  font-family: "Poppins", sans-serif;
+}
+
+.predict-Wrapper {
+  position: relative;
+  width: 100%;
+  padding-top: 100px; /* Adjust this value based on your header's height */
+  min-height: 100vh;
+  padding: 2rem;
+  background-color: #ffffff;
+  overflow: auto; /* Changed from 'hidden' to 'auto' to enable content scrolling */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.form {
+  width: 100%;
+  max-width: 820px;
+  height: 1040px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 0 20px 1px rgba(91, 77, 242, 0.1);
+  z-index: 2; /* Lower z-index than header */
+  overflow: hidden;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+form {
+  padding: 2.3rem 2.2rem;
+  z-index: 10;
+  overflow: hidden;
+  position: relative;
+}
+
+label {
+  color: #441940;
+}
+
+.input {
+  width: 100%;
+  outline: none;
+  border: 2px solid #f1f1f1;
+  background: none;
+  padding: 0.6rem 1.2rem;
+  color: #fff;
+  font-weight: 500;
+  font-size: 0.95rem;
+  letter-spacing: 0.5px;
+  border-radius: 25px;
+  transition: 0.3s;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  padding-top: 60px; /* Added padding to body to account for fixed header */
+  min-height: 100vh;
+  display: flex;
+  align-items: flex-start; /* Changed from 'center' to 'flex-start' to align content below header */
+  justify-content: center;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Adjust this */
+  text-align: center;
+  background-image: linear-gradient(310deg, rgb(45, 40, 202), rgb(124, 172, 235));
+  color: white;
+  padding: 20px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+}
+
+
+.header-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+
+
+.header h1, .header h2 {
+  margin: 0;
+  font-weight: normal;
+}
+
+.return-button, .record-button {
+  background-color: white;
+  border: none;
+  color: #0086C4;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 12px;
+}
+
+
+
+button[type="submit"] {
+  background-image: linear-gradient(to right, #2819ff, #228fe2); /* Gradient #0086C4 background */
+  color: white; /* White text */
+  padding: 15px 30px;
+  font-size: 16px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition:  0.3s;
+}
+
+button[type="submit"]:hover,
+button[type="submit"]:focus {
+  transform: translateY(-2px);
+  outline: none;
+}
+
+.predict-Wrapper.with-image {
+  position: relative;
+  width: 100%; /* Adjust as needed */
+  max-width: 600px; /* Adjust based on the size of your image */
+  margin: auto; /* Center the predict-Wrapper */
+  justify-content: center; /* Center children horizontally */
+  align-items: center; /* Center children vertically */
+  text-align: center; /* Ensure text is centered */
+  height: auto;
+}
+
+.background-image {
+  position: absolute;
+  width: 100%;
+  height: auto; /* Maintain aspect ratio */
+  opacity: 0.5; /* Make the image slightly transparent so the text is readable */
+  top: 0;
+  left: 0;
+  
+}
+
+.overlay-text {
+  position: absolute; /* Position it over the image */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Center the text block */
+  width: 100%;
+  color: rgb(64, 16, 73); /* Adjust text color for visibility */
+  text-align: center; /* Center the text */
+  padding: 20px; /* Add some padding around the text */
+  background-color: rgba(232, 227, 227, 0.5); /* Semi-transparent background */
+  border-radius: 10px; /* Optional: Adds rounded corners */
+  z-index: 2; /* Ensure it's above the background image */
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2); /* Optional: Adds a subtle shadow for depth */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Text shadow for better readability */
+}
+textarea#result {
+  width: 100%; /* Ensures the textarea stretches to the full width of its container */
+  padding: 0.6rem 1.2rem; /* Provides internal space around the text */
+  border: 2px solid #f1f1f1; /* Sets the border color and thickness */
+  background: none; /* Maintains a transparent background */
+  color: #441940; /* Text color */
+  font-family: "Poppins", sans-serif; /* Matches the font style of your input fields */
+  border-radius: 25px; /* Rounds the corners of the textarea */
+  transition: border-color 0.3s; /* Smooth transition for border color on focus */
+}
+
+textarea#result:focus {
+  border-color: #2819ff; /* Changes the border color when the textarea is focused */
+  outline: none; /* Removes the default focus outline to rely on the border color change */
+}
+.input,
+textarea#result {
+  width: 100%;
+  outline: none;
+  border: 2px solid #f1f1f1;
+  background: none;
+  padding: 0.6rem 1.2rem;
+  color: #441940; /* Ensures the text color matches the label and is readable */
+  font-weight: 500;
+  font-size: 0.95rem; /* Matches input text size */
+  letter-spacing: 0.5px;
+  border-radius: 25px;
+  transition: 0.3s;
+}
+
+
+    </style>
+
+
+
+
+<!---style shett end-->
+</head>
+<body>
+  
+  <div class="header">
+    <a class='btn btn-primary' href="{{ url_for('views.home_page') }}">Home</a>
+      <h1>Predict Data</h1>
+      
+  </div>
+  <span>
+    <br><br>
+  </span>
+ 
+  <div class="predict-Wrapper">
+    
+    <div class="form">
+      <div class="patient-form">
+        <form action="{{ url_for("views.predict")}}" method="post">
+        
+        <br>
+        <h1>Insertion data form</h1><br><br>
+
+        <label for="age">Age:</label>
+        <input type="number" id="age" name="age" min="0" max="100" required>
+        <span>(0-100)</span><br><br>
+    
+        <label>Sex:</label>
+        <input type="radio" id="male" name="sex" value="Male" required>
+        <label for="male">Male</label>
+        <input type="radio" id="female" name="sex" value="Female" required>
+        <label for="female">Female</label><br><br>
+    
+        <label for="cholesterol">Cholesterol:</label>
+        <input type="number" id="cholesterol" name="cholesterol" min="40" max="500"required>
+        <span>(40-500 mg/dL)</span><br><br>
+
+        <label for="heart_rate">Heart Rate:</label>
+        <input type="number" id="heart_rate" name="heart_rate" min="40" max="120"required>
+        <span>(40-120 bpm)</span><br><br>
+    
+        <label>Diabetes:</label>
+        <input type="radio" id="diabetes_yes" name="diabetes" value="Yes" required>
+        <label for="diabetes_yes">Yes</label>
+        <input type="radio" id="diabetes_no" name="diabetes" value="No" required>
+        <label for="diabetes_no">No</label><br><br>
+    
+        <label>Family History:</label>
+        <input type="radio" id="family_history_yes" name="family_history" value="Yes" required>
+        <label for="family_history_yes">Yes</label>
+        <input type="radio" id="family_history_no" name="family_history" value="No" required>
+        <label for="family_history_no">No</label><br><br>
+    
+        <label>Smoking:</label>
+        <input type="radio" id="smoking_yes" name="smoking" value="Yes" required>
+        <label for="smoking_yes">Yes</label>
+        <input type="radio" id="smoking_no" name="smoking" value="No" required>
+        <label for="smoking_no">No</label><br><br>
+    
+        <label>Obesity:</label>
+        <input type="radio" id="obesity_yes" name="obesity" value="Yes" required>
+        <label for="obesity_yes">Yes</label>
+        <input type="radio" id="obesity_no" name="obesity" value="No" required>
+        <label for="obesity_no">No</label><br><br>
+    
+        <label for="alcohol_consumption">Alcohol Consumption:</label>
+        <input type="radio" id="alCon_yes" name="alcohol_consumption" value="Yes" required>
+        <label for="obesity_yes">Yes</label>
+        <input type="radio" id="alCon_no" name="alcohol_consumption" value="No" required>
+        <label for="obesity_no">No</label><br><br>
+
+        <label for="exercise_hours">Exercise Hours Per Week:</label>
+        <input type="number" id="exercise_hours" name="exercise_hours" min="0" max="168"required>
+        <span>(0-168 hours)</span><br><br>
+
+    
+        <label>Previous Heart Problems:</label>
+        <input type="radio" id="previous_heart_problems_yes" name="previous_heart_problems" value="Yes" required>
+        <label for="previous_heart_problems_yes">Yes</label>
+        <input type="radio" id="previous_heart_problems_no" name="previous_heart_problems" value="No" required>
+        <label for="previous_heart_problems_no">No</label><br><br>
+    
+        <label>Medication Use:</label>
+        <input type="radio" id="medication_use_yes" name="medication_use" value="Yes" required>
+        <label for="medication_use_yes">Yes</label>
+        <input type="radio" id="medication_use_no" name="medication_use" value="No" required>
+        <label for="medication_use_no">No</label><br><br>
+    
+        <label for="stress_level">Stress Level:</label>
+        <input type="number" id="stress_level" name="stress_level" min="0" max="10"required>
+        <span>(0-10)</span><br><br>
+
+        <label for="bmi">BMI:</label>
+        <input type="number" id="bmi" name="bmi" step="0.1" min="17" max="50"required>
+        <span>(17-50)</span><br><br>
+
+        <label for="physical_activity_days">Physical Activity Days Per Week:</label>
+        <input type="number" id="physical_activity_days" name="physical_activity_days" min="0" max="7"required>
+        <span>(0-7 days)</span><br><br>
+    
+        <label for="sleep_hours">Sleep Hours Per Day:</label>
+        <input type="number" id="sleep_hours" name="sleep_hours" step="0.1" min="0" max="12"required>
+        <span>(0-12 hrs)</span><br><br>
+    
+        <label for="systolic_bp">Systolic BP:</label>
+        <input type="number" id="systolic_bp" name="systolic_bp" min="90" max="300"required>
+        <span>(90-300)</span><br><br>
+    
+        <label for="diastolic_bp">Diastolic BP:</label>
+        <input type="number" id="diastolic_bp" name="diastolic_bp" min="70" max="200"required>
+        <span>(70-200)</span><br><br>
+    
+        <label for="result">Result:</label>
+        <textarea id="result" name="result" rows="4" placeholder="" readonly>
+          {{ result }}
+        </textarea><br><br>
+        
+        <button type="submit">Predict Data</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+
+</body>
+</html>

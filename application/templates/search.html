@@ -1,0 +1,257 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Search Data Page</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Adjust this */
+    text-align: center;
+    background-image: linear-gradient(310deg, rgb(45, 40, 202), rgb(124, 172, 235));
+    color: white;
+    padding: 20px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+  }
+  
+  
+  .header-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+
+
+.header h1{
+  margin: 0;
+  font-weight: normal;
+  transform: translateX(-45px); /*to shift from the right */
+}
+
+.Wrapper {
+  display: flex;
+  justify-content: space-between;
+  max-width: 10000cm;
+  margin: auto;
+  min-height: 640px;
+  background-color: #ffffff; /* Light grey background for the whole wrapper */
+}
+
+.navigation {
+  flex-basis: 18%; /* Reduces the width of the navigation section */
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow effect */
+  background-color: #bae4f7; /* White background for contrast */
+  margin-right: 20px; /* Adds some space between the navigation and the content */
+}
+
+.content-wrapper {
+  flex-basis: 58%; /* Adjusts content wrapper width to fill the remaining space */
+  padding: 20px;
+}
+
+.searchButton {
+  display: block; /* Change to block to fill the container */
+  width: 100%; /* Makes the button extend full width of its parent */
+  padding: 10px 0; /* Adjust padding to your preference */
+  margin-top: 20px; /* Adds some space above the button */
+  background-color: #0086C4; /* Primary color */
+  color: #eaf2f6; /* Text color */
+  border: none; /* No border */
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor on hover */
+  font-size: 1rem; /* Text size */
+}
+
+.searchButton:hover {
+  background-color: #005f8a; /* Darker shade for hover effect */
+}
+
+
+
+.content-wrapper {
+  padding: 20px;
+}
+
+.content-wrapper h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+
+.content-wrapper table {
+    width: 670px;
+    margin: auto;
+    transform: translateX(-30px); /* Shifts the table 20px to the left */
+    border-collapse: collapse;
+}
+
+
+
+
+.content-wrapper th, .content-wrapper td {
+    border: 1px solid black;
+    text-align: left;
+    padding: 8px;
+}
+
+.content-wrapper th {
+    background-color: #0086C4; /* Sets a custom background color for table headers */
+    color: white; /* Sets the text color to white for better contrast and readability */
+}
+.content-wrapper h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  transform: translateX(-100px); /* Shifts the h1 element 20px to the left */
+}
+.form-option {
+    display: flex;  /* Aligns children (label and input) in a row */
+    align-items: center;  /* Centers children vertically */
+    margin-bottom: 10px;  /* Adds some space between each option */
+  }
+  
+  .form-option label {
+    margin-right: 10px;  /* Adds some space between label and input */
+    white-space: nowrap;  /* Prevents labels from wrapping */
+  }
+  
+  .form-option input[type="number"] {
+    margin-left: auto;  /* Pushes input fields to the right */
+  }
+  
+
+</style>
+</head>
+
+
+
+<body>
+    <div class="header">
+      <a class='btn btn-primary' href="{{ url_for('views.home_page') }}">Home</a>
+      <h1>Search Data</h1>
+    </div>
+    <br><br><br><br><br><br> <!-- Adjust the number of <br> based on your header height -->
+  
+    <div class="Wrapper">
+      <div class="navigation">
+        <h2>Search Data </h2>
+        <form action="{{ url_for('views.search') }}" method="post">
+          <label for="ageMin">Minimum Age:</label>
+          <input type="number" id="ageMin" name="ageMin"><br><br>
+  
+          <label for="ageMax">Maximum Age:</label>
+          <input type="number" id="ageMax" name="ageMax"><br><br>
+
+          <label for="pID">Patient ID:</label>
+          <input type="text" id="pID" name="pID"><br><br>
+        
+          <div class="form-option">
+          <label>Sex:</label>
+          <input type="radio" id="sexMale" name="sex" value="Male">
+          <label for="sexMale">Male</label>
+          <input type="radio" id="sexFemale" name="sex" value="Female">
+          <label for="sexFemale">Female</label><br><br>
+        </div>
+          <div class="form-option">
+          <label>Diabetes:</label>
+          <input type="radio" id="diabetesYes" name="diabetes" value="Yes">
+          <label for="diabetesYes">Yes</label>
+          <input type="radio" id="diabetesNo" name="diabetes" value="No">
+          <label for="diabetesNo">No</label><br><br>
+        </div>
+          <div class="form-option">
+          <label>Obesity:</label>
+          <input type="radio" id="obesityYes" name="obesity" value="Yes">
+          <label for="obesityYes">Yes</label>
+          <input type="radio" id="obesityNo" name="obesity" value="No">
+          <label for="obesityNo">No</label><br><br>
+        </div>
+          <div class="form-option">
+          <label>Sort By Age:</label>
+          <input type="radio" id="ascending" name="sort" value="Ascending">
+          <label for="asc">Asc</label>
+          <input type="radio" id="descending" name="sort" value="Descending">
+          <label for="desc">Desc</label><br><br>
+        </div>
+          <button class="searchButton">Search</button>
+        </form>
+      </div>
+  
+      <div class="content-wrapper">
+        <h1>Search Results</h1>
+        <div id="result-space">
+          <table>
+            <thead>
+              <tr>
+                <th>Patient ID</th>
+                <th>Age</th>
+                <th>Sex</th>
+                <th>Cholesterol (mg/dL)</th>
+                <th>Heart Rate (bpm)</th>
+                <th>Diabetes</th>
+                <th>Family History</th>
+                <th>Smoking</th>
+                <th>Obesity</th>
+                <th>Alcohol Consumption</th>
+                <th>Exercise Hours (per week)        </th>
+                <th>Previous Heart Problems</th>
+                <th>Medication Use</th>
+                <th>Stress Level</th>
+                <th>BMI</th>
+                <th>Physical Activity Days (per week)</th>
+                <th>Sleep Hours (per night)</th>
+                <th>Heart Attack Risk</th>
+                <th>Systolic BP (mmHg)</th>
+                <th>Diastolic BP (mmHg)</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for row in rows %}
+              <tr>
+                <td>{{ row.get('Patient ID', '') }}</td>
+                <td>{{ row.get('Age', '') }}</td>
+                <td>{{ row.get('Sex', '') }}</td>
+                <td>{{ row.get('Cholesterol', '') }}</td>
+                <td>{{ row.get('Heart Rate', '') }}</td>
+                <td>{{ row.get('Diabetes', '') }}</td>
+                <td>{{ row.get('Family History', '') }}</td>
+                <td>{{ row.get('Smoking', '') }}</td>
+                <td>{{ row.get('Obesity', '') }}</td>
+                <td>{{ row.get('Alcohol Consumption', '') }}</td>
+                <td>{{ row.get('Exercise Hours Per Week', '') }}</td>
+                <td>{{ row.get('Previous Heart Problems', '') }}</td>
+                <td>{{ row.get('Medication Use', '') }}</td>
+                <td>{{ row.get('Stress Level', '') }}</td>
+                <td>{{ row.get('BMI', '') }}</td>
+                <td>{{ row.get('Physical Activity Days Per Week', '') }}</td>
+                <td>{{ row.get('Sleep Hours Per Day', '') }}</td>
+                <td>{{ row.get('Heart Attack Risk', '') }}</td>
+                <td>{{ row.get('Systolic_BP', '') }}</td>
+                <td>{{ row.get('Diastolic_BP', '') }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+  
+    </div>
+  </body>
+  </html>

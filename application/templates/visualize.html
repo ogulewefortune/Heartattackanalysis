@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Data Visualization Page</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="script.js"></script>
+<!--stylesheet-->
+<style>
+  * {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+}
+
+body,
+input,
+textarea {
+font-family: "Poppins", sans-serif;
+}
+
+.predict-Wrapper {
+position: relative;
+width: 100%;
+padding-top: 100px; /* Adjust this value based on your header's height */
+min-height: 100vh;
+padding: 2rem;
+background-color: #ffffff;
+overflow: auto; /* Changed from 'hidden' to 'auto' to enable content scrolling */
+display: flex;
+align-items: center;
+justify-content: center;
+}
+
+.form {
+width: 100%;
+max-width: 820px;
+height: 850px;
+background-color: #ffffff;
+border-radius: 10px;
+box-shadow: 0 0 20px 1px rgba(91, 77, 242, 0.1);
+z-index: 2; /* Lower z-index than header */
+overflow: hidden;
+grid-template-columns: repeat(2, 1fr);
+}
+
+form {
+padding: 2.3rem 2.2rem;
+z-index: 10;
+overflow: hidden;
+position: relative;
+}
+
+label {
+color: #441940;
+}
+
+.input {
+width: 100%;
+outline: none;
+border: 2px solid #f1f1f1;
+background: none;
+padding: 0.6rem 1.2rem;
+color: #fff;
+font-weight: 500;
+font-size: 0.95rem;
+letter-spacing: 0.5px;
+border-radius: 25px;
+transition: 0.3s;
+}
+
+body {
+font-family: Arial, sans-serif;
+padding-top: 60px; /* Added padding to body to account for fixed header */
+min-height: 100vh;
+display: flex;
+align-items: flex-start; /* Changed from 'center' to 'flex-start' to align content below header */
+justify-content: center;
+}
+
+.header {
+display: flex;
+align-items: center;
+justify-content: space-between; /* Adjust this */
+text-align: center;
+background-image: linear-gradient(310deg, rgb(45, 40, 202), rgb(124, 172, 235));
+color: white;
+padding: 20px;
+box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+z-index: 100;
+}
+
+
+.header-content {
+flex-grow: 1;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+}
+
+
+
+.header h1, .header h2 {
+margin: 0;
+font-weight: normal;
+}
+
+.return-button, .record-button {
+background-color: white;
+border: none;
+color: #0086C4;
+padding: 10px 20px;
+text-align: center;
+text-decoration: none;
+display: inline-block;
+margin: 4px 2px;
+cursor: pointer;
+border-radius: 12px;
+}
+
+
+
+button[type="submit"] {
+background-image: linear-gradient(to right, #2819ff, #228fe2); /* Gradient #0086C4 background */
+color: white; /* White text */
+padding: 15px 30px;
+font-size: 16px;
+border: none;
+border-radius: 10px;
+cursor: pointer;
+transition:  0.3s;
+}
+
+button[type="submit"]:hover,
+button[type="submit"]:focus {
+transform: translateY(-2px);
+outline: none;
+}
+
+.predict-Wrapper.with-image {
+position: relative;
+width: 100%; /* Adjust as needed */
+max-width: 600px; /* Adjust based on the size of your image */
+margin: auto; /* Center the predict-Wrapper */
+justify-content: center; /* Center children horizontally */
+align-items: center; /* Center children vertically */
+text-align: center; /* Ensure text is centered */
+height: auto;
+}
+
+.background-image {
+position: absolute;
+width: 100%;
+height: auto; /* Maintain aspect ratio */
+opacity: 0.5; /* Make the image slightly transparent so the text is readable */
+top: 0;
+left: 0;
+
+}
+
+.overlay-text {
+position: absolute; /* Position it over the image */
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%); /* Center the text block */
+width: 100%;
+color: rgb(64, 16, 73); /* Adjust text color for visibility */
+text-align: center; /* Center the text */
+padding: 20px; /* Add some padding around the text */
+background-color: rgba(232, 227, 227, 0.5); /* Semi-transparent background */
+border-radius: 10px; /* Optional: Adds rounded corners */
+z-index: 2; /* Ensure it's above the background image */
+box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2); /* Optional: Adds a subtle shadow for depth */
+text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Text shadow for better readability */
+}
+</style>
+</head>
+<body>
+  <div class="Wrapper">
+    <div class="header">
+      <a class='btn btn-primary' href="{{ url_for('views.home_page') }}">Home</a>
+        <h1>Visualize Data</h1>
+        
+    </div>
+    <span>
+      <br><br>
+    </span>
+
+    <h1>Heart Attack Prediction Visualization</h1>
+    <hr>
+    <!-- Plot with x-axis representing ages and y-axis representing the number of people -->
+    <h3>Age Distribution</h4>
+    <!-- Render the plot using the provided base64-encoded image data -->
+    <img src="data:image/png;base64, {{ age_plot }}">
+
+    <h3>Sleep Distribution</h4>
+      <!-- Render the plot using the provided base64-encoded image data -->
+      <img src="data:image/png;base64, {{ sleep_plot }}" alt="Sleep Hours Distribution Chart">
+
+    <h3>Sleep Distribution</h4>
+      <!-- Render the plot using the provided base64-encoded image data -->
+       <!-- Render the bar graph using the base64-encoded image data -->
+    <img src="data:image/png;base64, {{ heart_plot }}" />
+
+
+    <h3>Cholesterol Vs Heart Rate Scatter Distribution</h4>
+      <!-- Render the plot using the provided base64-encoded image data -->
+       <!-- Render the bar graph using the base64-encoded image data -->
+    <img src="data:image/png;base64, {{ scat_plot }}" />
+
+      <script></script>
+
+  
+  </body>
+  </html>
